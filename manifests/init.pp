@@ -40,7 +40,7 @@ class mongodb (
   # instances and not only the default mongod
 
   file { "/etc/init.d/${::mongodb::old_servicename}":
-    ensure  => absent,
+    ensure  => 'absent',
     content => template("${module_name}/init.d/replacement_mongod.conf.erb"),
     mode    => '0755',
     before  => Anchor['mongodb::end'],
@@ -48,7 +48,7 @@ class mongodb (
 
   # stop and disable default mongod
   service { $::mongodb::old_servicename:
-    ensure     => absent,
+    ensure     => 'absent',
     enable     => false,
     hasstatus  => true,
     hasrestart => true,
