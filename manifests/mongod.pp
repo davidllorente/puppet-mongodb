@@ -32,7 +32,7 @@ define mongodb::mongod (
     $notify = undef
   }
 
-  notice('hola1')
+  notify{"hola1":}
 
   if ($mongodb::use_yamlconfig) {
     file {
@@ -43,7 +43,7 @@ define mongodb::mongod (
         require => Class['mongodb::install'];
     }
   } else {
-    notice('hola2')
+    notify{"hola2":}
     file {
       "/etc/mongod_${mongod_instance}.conf":
         content => template('mongodb/mongod.conf.erb'),
@@ -63,7 +63,7 @@ define mongodb::mongod (
   }
 
   if $mongodb::params::systemd_os {
-    notice('hola3')
+    notify{"hola3":}
     $service_provider = 'systemd'
     file {
       "/etc/init.d/mongod_${mongod_instance}":
