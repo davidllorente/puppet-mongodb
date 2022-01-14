@@ -14,7 +14,6 @@ class mongodb (
   $ulimit_nproc             = $mongodb::params::ulimit_nproc,
   $run_as_user              = $mongodb::params::run_as_user,
   $run_as_group             = $mongodb::params::run_as_group,
-  $old_servicename          = $mongodb::params::old_servicename,
   $use_yamlconfig           = $mongodb::params::use_yamlconfig,
   $use_enterprise           = $mongodb::params::use_enterprise,
 ) inherits mongodb::params {
@@ -34,27 +33,6 @@ class mongodb (
   class { 'mongodb::logrotate':
     require => Anchor['mongodb::install::end'],
     before  => Anchor['mongodb::end'],
-  }
-
-  # remove not wanted startup script, because it would kill all mongod
-  # instances and not only the default mongod
-
-  file { "/etc/init.d/${::mongodb::old_servicename}":
-    ensure  => 'absent',
-    content => template("${module_name}/init.d/replacement_mongod.conf.erb"),
-    mode    => '0755',
-    before  => Anchor['mongodb::end'],
-  }
-
-  # stop and disable default mongod
-  service { $::mongodb::old_servicename:
-    ensure     => 'absent',
-    enable     => false,
-    hasstatus  => true,
-    hasrestart => true,
-    subscribe  => Package['mongodb-package'],
-    require    => File["/etc/init.d/${::mongodb::old_servicename}"],
-    before     => Anchor['mongodb::end'],
   }
 
   mongodb::limits::conf {

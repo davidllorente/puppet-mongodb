@@ -37,13 +37,6 @@ class mongodb::install (
       $package_ensure = $package_version
     }
 
-    package { 'mongodb-stable':
-        ensure  => absent,
-        name    => $::mongodb::params::old_server_pkg_name,
-        require => Anchor['mongodb::install::begin'],
-        before  => Anchor['mongodb::install::end']
-    }
-
     package { 'mongodb-package':
       ensure  => $package_ensure,
       name    => $mongodb_package_name,

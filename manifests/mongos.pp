@@ -93,8 +93,7 @@ define mongodb::mongos (
         File[
           "/etc/mongos_${mongos_instance}.conf",
           "mongos_${mongos_instance}_service",
-          $db_specific_dir],
-        Service[$::mongodb::old_servicename]],
+          $db_specific_dir]],
       before     => Anchor['mongodb::end']
     }
   }

@@ -131,8 +131,7 @@ define mongodb::mongod (
       File[
         "/etc/mongod_${mongod_instance}.conf",
         "mongod_${mongod_instance}_service",
-        $db_specific_dir],
-      Service[$::mongodb::old_servicename]],
+        $db_specific_dir]],
     before     => Anchor['mongodb::end']
   }
 

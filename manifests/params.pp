@@ -11,8 +11,6 @@ class mongodb::params {
       'Debian': {
         $repo_class          = 'mongodb::repos::apt'
         $mongodb_pkg_name    = 'mongodb-enterprise'
-        $old_server_pkg_name = 'mongodb-stable'
-        $old_servicename     = 'mongodb'
         $run_as_user         = 'mongodb'
         $run_as_group        = 'mongodb'
         $logdir              = '/var/log/mongodb'
@@ -26,8 +24,6 @@ class mongodb::params {
       'Debian': {
         $repo_class          = 'mongodb::repos::apt'
         $mongodb_pkg_name    = 'mongodb-org'
-        $old_server_pkg_name = 'mongodb-stable'
-        $old_servicename     = 'mongodb'
         $run_as_user         = 'mongodb'
         $run_as_group        = 'mongodb'
         $logdir              = '/var/log/mongodb'
@@ -35,8 +31,6 @@ class mongodb::params {
       'RedHat': {
         $repo_class          = 'mongodb::repos::yum'
         $mongodb_pkg_name    = 'mongodb-org'
-        $old_server_pkg_name = 'mongodb-server'
-        $old_servicename     = 'mongod'
         $run_as_user         = 'mongod'
         $run_as_group        = 'mongod'
         $logdir              = '/var/log/mongodb'
