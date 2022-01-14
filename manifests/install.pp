@@ -20,13 +20,13 @@ class mongodb::install (
             $mongodb_package_name = $::mongodb::package_name
           }
         }
-        $mongodb_10gen_package_require = [
+        $mongodb_repo_package_require = [
           Anchor['mongodb::install::begin'],
           Class[$::mongodb::params::repo_class]
         ]
     } else {
         $mongodb_package_name = $::mongodb::package_name
-        $mongodb_10gen_package_require = [
+        $mongodb_repo_package_require = [
           Anchor['mongodb::install::begin']
         ]
     }
@@ -34,10 +34,7 @@ class mongodb::install (
     if ($package_version == undef ) {
       $package_ensure = $::mongodb::package_ensure
     } else {
-      $package_ensure = $::osfamily ? {
-        redhat => "${package_version}-mongodb_1",
-        debian => $package_version,
-      }
+      $package_ensure = $package_version
     }
 
     package { 'mongodb-stable':
@@ -50,7 +47,7 @@ class mongodb::install (
     package { 'mongodb-package':
       ensure  => $package_ensure,
       name    => $mongodb_package_name,
-      require => $mongodb_10gen_package_require,
+      require => $mongodb_repo_package_require,
       before  => [Anchor['mongodb::install::end']]
     }
 

@@ -9,9 +9,12 @@
 class mongodb::repos::yum {
 
   yumrepo { 'mongodb_yum_repo':
-    enabled  => 1,
-    descr    => '10gen MongoDB Repo',
-    baseurl  => 'http://downloads-distro.mongodb.org/repo/redhat/os/$basearch',
-    gpgcheck => 0;
+    ensure   => present,
+    name     => 'MongoDB_Repository',
+    baseurl  => 'https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/5.0/x86_64/',
+    enabled  => '1',
+    gpgcheck => '1',
+    gpgkey   => 'https://www.mongodb.org/static/pgp/server-5.0.asc',
   }
+
 }
