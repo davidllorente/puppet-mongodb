@@ -308,10 +308,6 @@ Enable/Disable REST api (default: true)
 
 Enable/Disable fork of mongod process (default: true)
 
-##### `mongod_auth`
-
-Enable/Disable auth true/false (default: false)
-
 ##### `mongod_useauth`
 
 Keyfile contents. Your random string/false (default: false)

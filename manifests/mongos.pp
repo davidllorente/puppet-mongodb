@@ -10,6 +10,7 @@ define mongodb::mongos (
   $mongos_logappend      = true,
   $mongos_fork           = true,
   $mongos_useauth        = false,
+  $mongos_engine         = 'wiredTiger',
   $mongos_add_options    = [],
   $mongos_start_detector = true
 ) {
@@ -19,7 +20,7 @@ define mongodb::mongos (
 
   file {
     "/etc/mongos_${mongos_instance}.conf":
-      content => template('mongodb/mongos.conf.erb'),
+      content => template('mongodb/mongos.conf.yaml.erb'),
       mode    => '0755',
       # no auto restart of a db because of a config change
       # notify => Class['mongodb::service'],

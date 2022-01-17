@@ -3,7 +3,6 @@
 class mongodb::params {
 
   $use_enterprise = false
-  $use_yamlconfig = false
 
   if ($use_enterprise) {
     ## FIXME: only Debian supported at the moment

@@ -12,11 +12,9 @@ define mongodb::mongod (
   $mongod_logappend                       = true,
   $mongod_rest                            = true,
   $mongod_fork                            = true,
-  $mongod_auth                            = false,
   $mongod_useauth                         = false,
   $mongod_engine                          = 'wiredTiger',
   $mongod_monit                           = false,
-  $mongod_http                            = false,
   $mongod_operation_profiling_slowms      = '',
   $mongod_operation_profiling_mode        = '',
   $mongod_add_options                     = [],
@@ -32,25 +30,12 @@ define mongodb::mongod (
     $notify = undef
   }
 
-  notify{"hola1":}
-
-  if ($mongodb::use_yamlconfig) {
-    file {
-      "/etc/mongod_${mongod_instance}.conf":
-        content => template('mongodb/mongod.conf.yaml.erb'),
-        mode    => '0755',
-        notify  => $notify,
-        require => Class['mongodb::install'];
-    }
-  } else {
-    notify{"hola2":}
-    file {
-      "/etc/mongod_${mongod_instance}.conf":
-        content => template('mongodb/mongod.conf.erb'),
-        mode    => '0755',
-        notify  => $notify,
-        require => Class['mongodb::install'];
-    }
+  file {
+    "/etc/mongod_${mongod_instance}.conf":
+      content => template('mongodb/mongod.conf.yaml.erb'),
+      mode    => '0755',
+      notify  => $notify,
+      require => Class['mongodb::install'];
   }
 
   file {
@@ -63,7 +48,7 @@ define mongodb::mongod (
   }
 
   if $mongodb::params::systemd_os {
-    notify{"hola3":}
+    notify{"hola1":}
     $service_provider = 'systemd'
     file {
       "/etc/init.d/mongod_${mongod_instance}":

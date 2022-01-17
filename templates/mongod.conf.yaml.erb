@@ -15,18 +15,13 @@ net:
 <%- if @mongod_bind_ip != "" -%>
    bindIp: <%= @mongod_bind_ip %>
 <%- end -%>
-<%- if @mongod_http != false -%>
-   http:
-      RESTInterfaceEnabled: <%= @mongod_rest %>
-<%- end -%>
 
 security:
-<%- if @mongod_auth != false -%>
+<%- if @mongod_useauth != false -%>
    keyFile: /etc/mongod_<%= @mongod_instance %>.key
    clusterAuthMode: keyFile
    authorization: enabled
-<%- end -%>
-<%- if @mongod_auth == false -%>
+<% else -%>
    authorization: disabled
 <%- end -%>
 
@@ -39,13 +34,12 @@ replication:
    replSetName: <%= @mongod_replSet %>
 <%- end -%>
 
-<%- if @mongod_shardsvr != false -%>
+<%- if @mongod_shardsvr == true -%>
 sharding:
-   clusterRole: <%= @mongod_shardsvr %>
-<%- end -%>
-<%- if @mongod_configsvr != false -%>
+   clusterRole: shardsvr
+<%- elsif @mongod_configsvr == true -%>
 sharding:
-   clusterRole: <%= @mongod_configsvr %>
+   clusterRole: configsvr
 <%- end -%>
 
 <%- if @mongod_operation_profiling_slowms != "" or @mongod_operation_profiling_mode != "" -%>
