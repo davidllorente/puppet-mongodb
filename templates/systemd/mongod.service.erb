@@ -1,5 +1,5 @@
 [Unit]
-Description=Mongos_<%= @mongod_instance %> server
+Description=Mongod_<%= @mongod_instance %> server
 Wants=network.target
 After=network.target
 Requires=mongod_<%= @mongod_instance %>_thp.service
