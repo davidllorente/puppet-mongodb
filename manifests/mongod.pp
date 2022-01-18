@@ -31,6 +31,11 @@ define mongodb::mongod (
   }
 
   file {
+    "/etc/mongod.conf":
+      ensure  => 'absent', #just to remove the default conf as created by the install process
+  }
+
+  file {
     "/etc/mongod_${mongod_instance}.conf":
       content => template('mongodb/mongod.conf.yaml.erb'),
       mode    => '0755',
@@ -48,7 +53,6 @@ define mongodb::mongod (
   }
 
   if $mongodb::params::systemd_os {
-    notify{"hola1":}
     $service_provider = 'systemd'
     file {
       "/etc/init.d/mongod_${mongod_instance}":
