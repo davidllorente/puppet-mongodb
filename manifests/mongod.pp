@@ -1,7 +1,7 @@
 # == definition mongodb::mongod
 define mongodb::mongod (
   $mongod_instance                        = $name,
-  $mongod_bind_ip                         = '',
+  $mongod_bind_ip                         = $::ipaddress,
   $mongod_port                            = 27017,
   $mongod_replSet                         = '',
   $mongod_enable                          = true,
