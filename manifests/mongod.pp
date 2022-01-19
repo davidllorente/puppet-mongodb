@@ -58,15 +58,7 @@ define mongodb::mongod (
       "/etc/init.d/mongod_${mongod_instance}":
         ensure => absent,
     }
-    file { "mongod_${mongod_instance}_thp":
-      path    => "/etc/systemd/system/mongod_${mongod_instance}_thp.service",
-      content => template('mongodb/systemd/mongod_thp.service.erb'),
-      mode    => '0644',
-      require => [
-        Class['mongodb::install'],
-        File["/etc/init.d/mongod_${mongod_instance}"]
-      ]
-    }
+
     file { "mongod_${mongod_instance}_service":
       path    => "/etc/systemd/system/mongod_${mongod_instance}.service",
       content => template('mongodb/systemd/mongod.service.erb'),
@@ -76,6 +68,44 @@ define mongodb::mongod (
         File["/etc/init.d/mongod_${mongod_instance}"]
       ]
     }
+
+    ## THP (Transparent Huge Pages) service for disabling it if desired (as recommended by mongo)
+    file { "mongod_${mongod_instance}_thp_service":
+      path    => "/etc/systemd/system/mongod_${mongod_instance}_thp.service",
+      content => template('mongodb/systemd/mongod_thp.service.erb'),
+      mode    => '0644',
+      require => [
+        Class['mongodb::install'],
+        File["/etc/init.d/mongod_${mongod_instance}"]
+      ]
+    }
+
+    exec { "Reload systemd daemon for new mongod_${mongod_instance} service config":
+      command     => '/bin/systemctl daemon-reload',
+      refreshonly => true,
+      notify      => $notify, #only restart mongod if boolean is true
+      subscribe   => [
+        File["mongod_${mongod_instance}_service"],
+        File["mongod_${mongod_instance}_thp_service"],
+      ]
+    }
+
+    service { "mongod_${mongod_instance}_thp":
+      ensure     => $mongod_running,
+      enable     => $mongod_enable,
+      hasstatus  => true,
+      hasrestart => true,
+      provider   => $service_provider,
+      require    => [
+        File[
+          "/etc/mongod_${mongod_instance}.conf",
+          "mongod_${mongod_instance}_thp_service",
+          $db_specific_dir]],
+      before     => Anchor['mongodb::end'],
+      subscribe => Exec["Reload systemd daemon for new mongod_${mongod_instance} service config"], #thp service always restarts if its config changed, regardless of boolean
+    }
+
+
   } else {
     # Workaround for Ubuntu 14.04 and Debian 7
     if ( versioncmp($::operatingsystemmajrelease, '14.04') == 0 ) {
