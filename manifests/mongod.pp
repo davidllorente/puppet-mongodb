@@ -26,8 +26,10 @@ define mongodb::mongod (
 
   if $mongod_restart_on_change {
     $notify = Service["mongod_${mongod_instance}"]
+    $subscribe = Exec["Reload systemd daemon for new mongod_${mongod_instance} service config(s)"]
   } else {
     $notify = undef
+    $subscribe = undef
   }
 
   file {
@@ -80,10 +82,9 @@ define mongodb::mongod (
       ]
     }
 
-    exec { "Reload systemd daemon for new mongod_${mongod_instance} service config":
+    exec { "Reload systemd daemon for new mongod_${mongod_instance} service config(s)":
       command     => '/bin/systemctl daemon-reload',
       refreshonly => true,
-      notify      => $notify, #only restart mongod if boolean is true
       subscribe   => [
         File["mongod_${mongod_instance}_service"],
         File["mongod_${mongod_instance}_thp_service"],
@@ -102,7 +103,7 @@ define mongodb::mongod (
           "mongod_${mongod_instance}_thp_service",
           $db_specific_dir]],
       before     => Anchor['mongodb::end'],
-      subscribe => Exec["Reload systemd daemon for new mongod_${mongod_instance} service config"], #thp service always restarts if its config changed, regardless of boolean
+      subscribe  => $subscribe,
     }
 
 
@@ -155,7 +156,8 @@ define mongodb::mongod (
         "/etc/mongod_${mongod_instance}.conf",
         "mongod_${mongod_instance}_service",
         $db_specific_dir]],
-    before     => Anchor['mongodb::end']
+    before     => Anchor['mongodb::end'],
+    subscribe  => $subscribe,
   }
 
 }
