@@ -2,7 +2,7 @@
 define mongodb::mongos (
   $mongos_configServers,
   $mongos_instance       = $name,
-  $mongos_bind_ip        = $::ipaddress,
+  $mongos_bind_ip        = "localhost,127.0.0.1",
   $mongos_port           = 27017,
   $mongos_service_manage = true,
   $mongos_enable         = true,
