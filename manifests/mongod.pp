@@ -42,7 +42,7 @@ define mongodb::mongod (
       content => template('mongodb/mongod.conf.yaml.erb'),
       mode    => '0755',
       notify  => $notify,
-      require => Class['mongodb::install'];
+      require => Class['mongodb::install'],
   }
 
   file {
@@ -141,7 +141,7 @@ define mongodb::mongod (
       mode    => '0700',
       owner   => $mongodb::params::run_as_user,
       require => Class['mongodb::install'],
-      notify  => Service["mongod_${mongod_instance}"],
+      notify  => $notify,
     }
   }
 
