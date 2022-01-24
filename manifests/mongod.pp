@@ -33,11 +33,6 @@ define mongodb::mongod (
   }
 
   file {
-    "/etc/mongod.conf":
-      ensure  => 'absent', #just to remove the default conf as created by the install process
-  }
-
-  file {
     "/etc/mongod_${mongod_instance}.conf":
       content => template('mongodb/mongod.conf.yaml.erb'),
       mode    => '0755',
