@@ -16,13 +16,10 @@ net:
    bindIp: <%= @mongos_bind_ip %>
 <%- end -%>
 
-security:
 <%- if @mongos_useauth != false -%>
+security:
    keyFile: /etc/mongos_<%= @mongos_instance %>.key
    clusterAuthMode: keyFile
-   authorization: enabled
-<% else -%>
-   authorization: disabled
 <%- end -%>
 
 storage:
