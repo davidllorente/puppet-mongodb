@@ -3,7 +3,7 @@
 class mongodb (
   $systemd_os               = $mongodb::params::systemd_os,
   $dbdir                    = $mongodb::params::dbdir,
-  $pidfilepath              = $mongodb::params::pidfilepath,
+  $pidfilepath              = $dbdir,
   $logdir                   = $mongodb::params::logdir,
   $logrotatenumber          = $mongodb::params::logrotatenumber,
   $logrotate_package_manage = $mongodb::params::logrotate_package_manage,
