@@ -16,7 +16,7 @@ define mongodb::mongos (
   $mongos_start_detector    = true
 ) {
 
-  $db_specific_dir = "${::mongodb::params::dbdir}/mongos_${mongos_instance}"
+  $db_specific_dir = "${::mongodb::dbdir}/mongos_${mongos_instance}"
   $osfamily_lc = downcase($::osfamily)
 
   if $mongos_restart_on_change {

@@ -21,7 +21,7 @@ define mongodb::mongod (
   $mongod_deactivate_transparent_hugepage = false,
 ) {
 
-  $db_specific_dir = "${::mongodb::params::dbdir}/mongod_${mongod_instance}"
+  $db_specific_dir = "${::mongodb::dbdir}/mongod_${mongod_instance}"
   $osfamily_lc = downcase($::osfamily)
 
   if $mongod_restart_on_change {
