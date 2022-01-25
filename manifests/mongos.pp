@@ -11,7 +11,6 @@ define mongodb::mongos (
   $mongos_logappend         = true,
   $mongos_fork              = true,
   $mongos_useauth           = false,
-  $mongos_engine            = 'wiredTiger',
   $mongos_add_options       = [],
   $mongos_start_detector    = true
 ) {

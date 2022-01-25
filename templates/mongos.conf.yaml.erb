@@ -22,10 +22,6 @@ security:
    clusterAuthMode: keyFile
 <%- end -%>
 
-storage:
-   dbPath: <%= scope.lookupvar('mongodb::dbdir') %>/mongos_<%= @mongos_instance %>
-   engine: <%= @mongos_engine %>
-
 <%- if @mongos_configServers != "" -%>
 sharding:
    configDB: <%= @mongos_configServers %>
