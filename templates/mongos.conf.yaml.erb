@@ -8,7 +8,7 @@ systemLog:
 
 processManagement:
    fork: <%= @mongos_fork %>
-   pidFilePath: <%= scope.lookupvar('mongodb::dbdir') %>/mongos_<%= @mongos_instance %>/mongod.pid
+   pidFilePath: <%= scope.lookupvar('mongodb::dbdir') %>/mongos_<%= @mongos_instance %>/mongos.pid
 
 net:
    port: <%= @mongos_port %>
