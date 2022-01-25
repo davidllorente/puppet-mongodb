@@ -211,10 +211,6 @@ But you can also set them, when including class mongodb.
 Default is '/var/lib' (string). This is the root directory where the mongo instances
 will create their own subdirectories.
 
-##### `pidfilepath`
-
-Default is `dbdir`.
-
 ##### `logdir`
 
 Default on Redhat '/var/log/mongo' and on Debian '/var/log/mongodb'.

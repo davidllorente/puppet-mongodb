@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= scope.lookupvar('mongodb::pidfilepath') %>/mongos_<%= @mongos_instance %>/mongos.pid
+PIDFile=<%= scope.lookupvar('mongodb::dbdir') %>/mongos_<%= @mongos_instance %>/mongos.pid
 ExecStart=/usr/bin/mongos --config /etc/mongos_<%= @mongos_instance %>.conf
 Restart=on-failure
 User=<%= scope.lookupvar('mongodb::run_as_user') %>

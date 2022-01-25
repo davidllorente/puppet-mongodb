@@ -6,7 +6,7 @@ Requires=mongod_<%= @mongod_instance %>_thp.service
 
 [Service]
 Type=forking
-PIDFile=<%= scope.lookupvar('mongodb::pidfilepath') %>/mongod_<%= @mongod_instance %>/mongod.pid
+PIDFile=<%= scope.lookupvar('mongodb::dbdir') %>/mongod_<%= @mongod_instance %>/mongod.pid
 ExecStart=/usr/bin/mongod --config /etc/mongod_<%= @mongod_instance %>.conf
 Restart=on-failure
 User=<%= scope.lookupvar('mongodb::run_as_user') %>
