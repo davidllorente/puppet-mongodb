@@ -83,6 +83,7 @@ define mongodb::mongod (
       subscribe   => [
         File["mongod_${mongod_instance}_service"],
         File["mongod_${mongod_instance}_thp_service"],
+        File["${::mongodb::old_servicename}_service"],
       ]
     }
 

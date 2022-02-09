@@ -13,6 +13,7 @@ class mongodb (
   $ulimit_nproc             = $mongodb::params::ulimit_nproc,
   $run_as_user              = $mongodb::params::run_as_user,
   $run_as_group             = $mongodb::params::run_as_group,
+  $old_servicename          = $mongodb::params::old_servicename,
   $use_enterprise           = $mongodb::params::use_enterprise,
 ) inherits mongodb::params {
 
@@ -32,6 +33,25 @@ class mongodb (
     require => Anchor['mongodb::install::end'],
     before  => Anchor['mongodb::end'],
   }
+
+
+  # remove not wanted startup script and default conf
+  file { "/etc/mongod.conf":
+    ensure  => 'absent',
+  }
+
+  if $mongodb::params::systemd_os {
+    file { "${::mongodb::old_servicename}_service":
+      path    => "/usr/lib/systemd/system/${::mongodb::old_servicename}.service",
+      ensure  => 'absent',
+    }
+
+    # stop and disable default mongod
+    service { $::mongodb::old_servicename:
+      ensure  => 'absent',
+    }
+  }
+
 
   mongodb::limits::conf {
     'mongod-nofile-soft':
