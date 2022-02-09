@@ -37,9 +37,8 @@ class mongodb::install (
       $package_ensure = $package_version
     }
 
-    package { 'mongodb-package':
+    package { $mongodb_package_name:
       ensure  => $package_ensure,
-      name    => $mongodb_package_name,
       require => $mongodb_repo_package_require,
       before  => [Anchor['mongodb::install::end']]
     }
