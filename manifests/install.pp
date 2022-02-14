@@ -2,8 +2,9 @@
 #
 #
 class mongodb::install (
-  $repo_manage    = true,
-  $package_version = undef
+  $repo_manage          = true,
+  $extra_package_name   = undef,
+  $extra_package_ensure = 'installed'
 ) {
 
     anchor { 'mongodb::install::begin': }
@@ -31,16 +32,20 @@ class mongodb::install (
         ]
     }
 
-    if ($package_version == undef ) {
-      $package_ensure = $::mongodb::package_ensure
-    } else {
-      $package_ensure = $package_version
-    }
+    $package_ensure = $::mongodb::package_ensure
 
     package { $mongodb_package_name:
       ensure  => $package_ensure,
       require => $mongodb_repo_package_require,
       before  => [Anchor['mongodb::install::end']]
+    }
+
+    if ($extra_package_name != undef) {
+      package { $extra_package_name:
+        ensure  => $extra_package_ensure,
+        require => $mongodb_repo_package_require,
+        before  => [Anchor['mongodb::install::end']]
+      }
     }
 
 }
