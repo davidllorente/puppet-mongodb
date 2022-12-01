@@ -19,6 +19,7 @@ define mongodb::mongod (
   $mongod_operation_profiling_mode        = '',
   $mongod_add_options                     = [],
   $mongod_deactivate_transparent_hugepage = false,
+  $mongod_systemd_timeout_start_sec       = 900,
 ) {
 
   $db_specific_dir = "${::mongodb::dbdir}/mongod_${mongod_instance}"

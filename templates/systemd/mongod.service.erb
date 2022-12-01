@@ -13,6 +13,7 @@ User=<%= scope.lookupvar('mongodb::run_as_user') %>
 Group=<%= scope.lookupvar('mongodb::run_as_group') %>
 LimitNOFILE=<%= scope.lookupvar('mongodb::ulimit_nofiles') %>
 LimitNPROC=<%= scope.lookupvar('mongodb::ulimit_nproc') %>
+TimeoutStartSec=<%= @mongod_systemd_timeout_start_sec %>
 
 [Install]
 WantedBy=multi-user.target
