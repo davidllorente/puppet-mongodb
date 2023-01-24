@@ -27,9 +27,8 @@ class mongodb::repos::yum (
     gpgkey   => "https://www.mongodb.org/static/pgp/server-$mongomajorminor.asc",
   }
 
-  yumrepo { 'old_mongodb_yum_repo':
-    ensure   => absent,
-    name     => "MongoDB_Repository",
+  file { "/etc/yum.repos.d/MongoDB_Repository.repo":
+    ensure  => absent,
   }
 
 }
