@@ -19,7 +19,7 @@ class mongodb::repos::yum (
 
   yumrepo { 'mongodb_yum_repo':
     ensure   => present,
-    name     => "MongoDB $mongomajorminor repo",
+    name     => "MongoDB_$mongomajorminor",
     descr    => "MongoDB $mongomajorminor Official Yum Repository",
     baseurl  => "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/$mongomajorminor/x86_64/",
     enabled  => '1',
