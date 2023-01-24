@@ -12,7 +12,7 @@ class mongodb::repos::yum (
 
   if (($package_ensure =~ /(\d+\.*)+\d/) and (versioncmp($package_ensure, '3.0.0') >= 0)) {
     $mongovernumbers = split($package_ensure, '[.]')
-    $mongomajorminor = "${$mongover[0]}.${$mongover[1]}"
+    $mongomajorminor = "${$mongovernumbers[0]}.${$mongovernumbers[1]}"
   } else { # if package_ensure does not specify version, assume 5.0
     $mongomajorminor = "5.0"
   }
