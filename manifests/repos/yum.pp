@@ -21,7 +21,7 @@ class mongodb::repos::yum (
     ensure   => present,
     name     => "MongoDB_$mongomajorminor",
     descr    => "MongoDB $mongomajorminor Official Yum Repository",
-    baseurl  => "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/$mongomajorminor/x86_64/",
+    baseurl  => "https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/$mongomajorminor/x86_64/",
     enabled  => '1',
     gpgcheck => '1',
     gpgkey   => "https://www.mongodb.org/static/pgp/server-$mongomajorminor.asc",
