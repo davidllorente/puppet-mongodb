@@ -27,11 +27,22 @@ security:
 
 storage:
    dbPath: <%= scope.lookupvar('mongodb::dbdir') %>/mongod_<%= @mongod_instance %>
+<%- if @mongod_oplogMinRetentionHours != "" -%>
+   oplogMinRetentionHours: <%= @mongod_oplogMinRetentionHours %>
+<%- end -%>
    engine: <%= @mongod_engine %>
+<%- if @mongod_engine == "wiredTiger" and @mongod_cacheSizeGB != "" -%>
+   wiredTiger:
+      engineConfig:
+         cacheSizeGB: <%= @mongod_cacheSizeGB %>
+<%- end -%>
 
 <%- if @mongod_replSet != "" -%>
 replication:
    replSetName: <%= @mongod_replSet %>
+<%- if @mongod_oplogSizeMB != "" -%>
+   oplogSizeMB: <%= @mongod_oplogSizeMB %>
+<%- end -%>
 <%- end -%>
 
 <%- if @mongod_shardsvr == true -%>
