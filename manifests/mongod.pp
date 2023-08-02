@@ -23,6 +23,7 @@ define mongodb::mongod (
   $mongod_add_options                     = [],
   $mongod_deactivate_transparent_hugepage = false,
   $mongod_systemd_timeout_start_sec       = 900,
+  $mongod_systemd_memory_limit            = '',
 ) {
 
   $db_specific_dir = "${::mongodb::dbdir}/mongod_${mongod_instance}"
